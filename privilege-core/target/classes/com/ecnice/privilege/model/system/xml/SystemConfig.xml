@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SystemConfigXML">
+	<resultMap id="SystemConfigMap" type="systemConfig">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="config_name" property="configName" jdbcType="VARCHAR" />
+		<result column="config_sn" property="configSn" jdbcType="VARCHAR" />
+		<result column="config_key" property="configKey" jdbcType="VARCHAR" />
+		<result column="config_value" property="configValue" jdbcType="VARCHAR" />
+		<result column="remark" property="remark" jdbcType="VARCHAR" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="config_order" property="configOrder" jdbcType="INTEGER" />
+		<result column="image" property="image" jdbcType="BLOB" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		config_name,
+		config_sn,
+		config_key,
+		config_value,
+		remark,
+		create_time,
+		creator,
+		update_time,
+		updator,
+		del_flag,
+		config_order,
+		image
+	</sql>
+
+	<sql id="where">
+		<if test="id!=null and id!=''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="configName!=null and configName!=''">
+			and config_name like #{configName,jdbcType=VARCHAR}"%"
+		</if>
+		<if test="configSn!=null and configSn!=''">
+			and config_sn = #{configSn,jdbcType=VARCHAR}
+		</if>
+		<if test="configKey!=null and configKey!=''">
+			and config_key = #{configKey,jdbcType=VARCHAR}
+		</if>
+		<if test="configValue!=null and configValue!=''">
+			and config_value = #{configValue,jdbcType=VARCHAR}
+		</if>
+		<if test="remark!=null and remark!=''">
+			and remark = #{remark,jdbcType=VARCHAR}
+		</if>
+		<if test="createTime!=null and createTime!=''">
+			and create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="creator!=null and creator!=''">
+			and creator = #{creator,jdbcType=VARCHAR}
+		</if>
+		<if test="updateTime!=null and updateTime!=''">
+			and update_time = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updator!=null and updator!=''">
+			and updator = #{updator,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag!=null">
+			and del_flag = #{delFlag,jdbcType=INTEGER}
+		</if>
+		<if test="configOrder!=null and configOrder!=0">
+			and config_order = #{configOrder,jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<select id="getSystemConfigById" resultMap="SystemConfigMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_system_config
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getSystemConfigs" parameterType="systemConfig"
+		resultMap="SystemConfigMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_system_config
+	</select>
+	<select id="getSystemConfigsBySn" parameterType="java.lang.String"
+		resultMap="SystemConfigMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_system_config where config_sn=#{value} order by
+		config_order
+	</select>
+	<select id="getSystemConfigsByKey" parameterType="java.lang.String"
+		resultMap="SystemConfigMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_system_config where config_key=#{value} order by
+		config_order
+	</select>
+
+	<select id="getPagerModel" parameterType="systemConfig"
+		resultMap="SystemConfigMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_system_config where 1=1
+		<include refid="where" />
+		order by config_order
+	</select>
+
+	<insert id="insertSystemConfig" parameterType="systemConfig">
+		insert into tbl_privilege_system_config (
+		<include refid="Base_Column_List" />
+		)
+		values (
+		#{id,jdbcType=VARCHAR},
+		#{configName,jdbcType=VARCHAR},
+		#{configSn,jdbcType=VARCHAR},
+		#{configKey,jdbcType=VARCHAR},
+		#{configValue,jdbcType=VARCHAR},
+		#{remark,jdbcType=VARCHAR},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{creator,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=VARCHAR},
+		#{delFlag,jdbcType=INTEGER},
+		#{configOrder,jdbcType=INTEGER},
+		#{image,jdbcType=BLOB}
+		)
+	</insert>
+
+	<delete id="delSystemConfig" parameterType="java.lang.String">
+		delete from
+		tbl_privilege_system_config
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<update id="updateSystemConfig" parameterType="systemConfig">
+		update tbl_privilege_system_config
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="configName != null">
+				config_name = #{configName,jdbcType=VARCHAR},
+			</if>
+			<if test="configSn != null">
+				config_sn = #{configSn,jdbcType=VARCHAR},
+			</if>
+			<if test="configKey != null">
+				config_key = #{configKey,jdbcType=VARCHAR},
+			</if>
+			<if test="configValue != null">
+				config_value = #{configValue,jdbcType=VARCHAR},
+			</if>
+			<if test="remark != null">
+				remark = #{remark,jdbcType=VARCHAR},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="configOrder != null">
+				config_order = #{configOrder,jdbcType=INTEGER},
+			</if>
+			<if test="image !=null ">
+				image = #{image,jdbcType=BLOB},
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+</mapper>

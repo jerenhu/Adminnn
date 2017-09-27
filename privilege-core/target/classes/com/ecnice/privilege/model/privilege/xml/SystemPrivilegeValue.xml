@@ -1,0 +1,176 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SystemPrivilegeValueXML" >
+    <resultMap id="SystemPrivilegeValueMap" type="systemPrivilegeValue" >
+        
+        <result column="id" property="id" jdbcType="INTEGER" />
+        
+        <result column="system_id" property="systemId" jdbcType="VARCHAR" />
+        
+        <result column="position" property="position" jdbcType="INTEGER" />
+        
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        
+        <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+        
+        <result column="remark" property="remark" jdbcType="VARCHAR" />
+        
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        
+        <result column="creator" property="creator" jdbcType="VARCHAR" />
+        
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        
+        <result column="updator" property="updator" jdbcType="VARCHAR" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        system_id,
+        position,
+        name,
+        order_no,
+        remark,
+        create_time,
+        creator,
+        update_time,
+        updator
+    </sql>
+    
+    <sql id="where">
+        <if test="id!=null and id!=''">
+        and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="systemId!=null and systemId!=''">
+        and system_id = #{systemId,jdbcType=VARCHAR}
+        </if>
+        <if test="position!=null">
+        and position = #{position,jdbcType=VARCHAR}
+        </if>
+        <if test="name!=null and name!=''">
+        and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="orderNo!=null and orderNo!=''">
+        and order_no = #{orderNo,jdbcType=INTEGER}
+        </if>
+        <if test="remark!=null and remark!=''">
+        and remark = #{remark,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime!=null and createTime!=''">
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="creator!=null and creator!=''">
+        and creator = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime!=null and updateTime!=''">
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updator!=null and updator!=''">
+        and updator = #{updator,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    <select id="getSystemPrivilegeValuesBySystemSn" parameterType="java.lang.String" resultMap="SystemPrivilegeValueMap">
+    	SELECT
+		  t1.id,
+		  t1.system_id,
+		  t1.position,
+		  t1.name,
+		  t1.order_no,
+		  t1.remark,
+		  t1.create_time,
+		  t1.creator,
+		  t1.update_time,
+		  t1.updator
+		FROM tbl_privilege_pvalue t1
+		  INNER JOIN tbl_privilege_icsystem t2
+		    ON t1.system_id = t2.id
+		    WHERE t2.sn=#{value,jdbcType=VARCHAR}
+		ORDER BY t1.order_no
+    </select>
+    <select id="getSystemPrivilegeValueById" resultMap="SystemPrivilegeValueMap" parameterType="java.lang.String" >
+        select * from tbl_privilege_pvalue where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getAll" parameterType="systemPrivilegeValue" resultMap="SystemPrivilegeValueMap">
+        select * from tbl_privilege_pvalue where 1=1 
+        <include refid="where" />
+        order by order_no
+    </select>
+    
+    <select id="getPagerModelByQuery" parameterType="systemPrivilegeValue" resultMap="SystemPrivilegeValueMap">
+        select * from tbl_privilege_pvalue where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <select id="getByPageCount" parameterType="systemPrivilegeValue" resultType="int">
+        select count(1) from tbl_privilege_pvalue where 1=1 
+        <include refid="where" />
+    </select>
+   
+    <insert id="insertSystemPrivilegeValue" parameterType="systemPrivilegeValue" >
+        insert into tbl_privilege_pvalue (<include refid="Base_Column_List" />)
+        values (
+        #{systemId,jdbcType=VARCHAR},
+        #{position,jdbcType=INTEGER},
+        #{name,jdbcType=VARCHAR},
+        #{orderNo,jdbcType=INTEGER},
+        #{remark,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{creator,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{updator,jdbcType=VARCHAR}
+        )
+    </insert>
+    <insert id="initPval" parameterType="java.lang.String" >
+        insert into tbl_privilege_pvalue (system_id,position,name,order_no)
+        values 
+        (#{systemId,jdbcType=VARCHAR},0,'添加',2),
+        (#{systemId,jdbcType=VARCHAR},1,'查询',1),
+        (#{systemId,jdbcType=VARCHAR},2,'修改',3),
+        (#{systemId,jdbcType=VARCHAR},3,'删除',4),
+        (#{systemId,jdbcType=VARCHAR},4,'打印',5),
+        (#{systemId,jdbcType=VARCHAR},5,'导出',6),
+        (#{systemId,jdbcType=VARCHAR},6,'授权',7)
+    </insert>
+    
+    <delete id="delSystemPrivilegeValueById" parameterType="java.lang.String" >
+        delete from tbl_privilege_pvalue
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <update id="updateSystemPrivilegeValue" parameterType="systemPrivilegeValue" >
+        update tbl_privilege_pvalue
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="systemId != null" >
+                system_id = #{systemId,jdbcType=VARCHAR},
+            </if>
+            <if test="position != null" >
+                position = #{position,jdbcType=INTEGER},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=INTEGER},
+            </if>
+            <if test="remark != null" >
+                remark = #{remark,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null" >
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updator != null" >
+                updator = #{updator,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

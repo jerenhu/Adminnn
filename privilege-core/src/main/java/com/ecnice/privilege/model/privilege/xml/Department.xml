@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DepartmentXML">
+	<resultMap id="DepartmentMap" type="department">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="company_id" property="companyId" jdbcType="VARCHAR" />
+		<result column="name" property="name" jdbcType="VARCHAR" />
+		<result column="code" property="code" jdbcType="VARCHAR" />
+		<result column="note" property="note" jdbcType="VARCHAR" />
+		<result column="pid" property="pid" jdbcType="VARCHAR" />
+		<result column="order_no" property="orderNo" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+		<result column="leader" property="leader" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		company_id,
+		name,
+		code,
+		note,
+		pid,
+		order_no,
+		create_time,
+		creator,
+		update_time,
+		updator,
+		del_flag,
+		leader
+	</sql>
+
+	<sql id="where">
+		<if test="id!=null and id!=''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="companyId!=null and companyId!=''">
+			and company_id = #{companyId,jdbcType=VARCHAR}
+		</if>
+		<if test="name!=null and name!=''">
+			and name like #{name,jdbcType=VARCHAR}"%"
+		</if>
+		<if test="code != null and code != ''">
+        	and code = #{code,jdbcType=VARCHAR}
+        </if>
+		<if test="note!=null and note!=''">
+			and note = #{note,jdbcType=VARCHAR}
+		</if>
+		<if test="pid!=null and pid!=''">
+			and pid = #{pid,jdbcType=VARCHAR}
+		</if>
+		<if test="orderNo != null ">
+			and order_no = #{orderNo,jdbcType=INTEGER}
+		</if>
+		<if test="createTime!=null and createTime!=''">
+			and create_time = #{createTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="creator!=null and creator!=''">
+			and creator = #{creator,jdbcType=VARCHAR}
+		</if>
+		<if test="updateTime!=null and updateTime!=''">
+			and update_time = #{updateTime,jdbcType=TIMESTAMP}
+		</if>
+		<if test="updator!=null and updator!=''">
+			and updator = #{updator,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag!=null">
+			and del_flag = #{delFlag,jdbcType=INTEGER}
+		</if>
+		<if test="leader!=null">
+			and leader = #{leader,jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<select id="getDepartmentByPid" resultMap="DepartmentMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_department
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+	<select id="getDepartmentById" resultMap="DepartmentMap"
+		parameterType="java.lang.String">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_department
+		where ID = #{id,jdbcType=VARCHAR}
+	</select>
+
+	<select id="getAll" parameterType="department" resultMap="DepartmentMap">
+		select * from tbl_privilege_department where 1=1 
+		<include refid="where" />
+		order by order_no asc
+	</select>
+
+	<select id="getPagerModel" parameterType="department" resultMap="DepartmentMap">
+		select
+		<include refid="Base_Column_List" />
+		from tbl_privilege_department where 1=1
+		<include refid="where" />
+		order by order_no asc
+	</select>
+	
+    <!-- 人员管理左侧树形结构 -->
+    <select id="getRootDepartment" parameterType="department" resultMap="DepartmentMap">
+        select id,name,company_id,pid,code from tbl_privilege_department where 1=1 and (pid is null or pid='')  and del_flag=1 
+        <if test="companyId != null and companyId != ''">
+        and company_id = #{companyId,jdbcType=VARCHAR} 
+        </if>
+        order by code asc
+    </select>
+	
+	<select id="getChildrenIdsByPid" parameterType="java.lang.String" resultType="java.lang.String">
+		select id from tbl_privilege_department where pid = #{pid}
+	</select>
+
+	<insert id="insertDepartment" parameterType="department">
+		insert into tbl_privilege_department (
+		<include refid="Base_Column_List" />
+		)
+		values (
+		#{id,jdbcType=VARCHAR},
+		#{companyId,jdbcType=VARCHAR},
+		#{name,jdbcType=VARCHAR},
+		#{code,jdbcType=VARCHAR},
+		#{note,jdbcType=VARCHAR},
+		#{pid,jdbcType=VARCHAR},
+		#{orderNo,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{creator,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=VARCHAR},
+		#{delFlag,jdbcType=INTEGER},
+		#{leader,jdbcType=INTEGER}
+		)
+	</insert>
+	
+	<insert id="insertDepartmentBatch" parameterType="java.util.List">
+        insert into tbl_privilege_department (<include refid="Base_Column_List" />)
+        values 
+        <foreach collection="list" item="item" index="index" separator="," >  
+	        (
+	        #{item.id,jdbcType=VARCHAR},
+			#{item.companyId,jdbcType=VARCHAR},
+			#{item.name,jdbcType=VARCHAR},
+			#{item.code,jdbcType=VARCHAR},
+			#{item.note,jdbcType=VARCHAR},
+			#{item.pid,jdbcType=VARCHAR},
+			#{item.orderNo,jdbcType=INTEGER},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.creator,jdbcType=VARCHAR},
+			#{item.updateTime,jdbcType=TIMESTAMP},
+			#{item.updator,jdbcType=VARCHAR},
+			#{item.delFlag,jdbcType=INTEGER},
+			#{item.leader,jdbcType=INTEGER}
+	        )
+        </foreach>
+    </insert>
+
+	<!-- 同步部门数据 -->
+    <update id="synDepartmentList" parameterType="java.util.List">  
+	    insert INTO tbl_privilege_department  
+	    (<include refid="Base_Column_List" />)  
+	    VALUES  
+	    <foreach collection="list" index="index" item="item" separator=",">  
+            (
+            	#{item.id,jdbcType=VARCHAR},
+				#{item.companyId,jdbcType=VARCHAR},
+				#{item.name,jdbcType=VARCHAR},
+				#{item.code,jdbcType=VARCHAR},
+				#{item.note,jdbcType=VARCHAR},
+				#{item.pid,jdbcType=VARCHAR},
+				#{item.orderNo,jdbcType=INTEGER},
+				#{item.createTime,jdbcType=TIMESTAMP},
+				#{item.creator,jdbcType=VARCHAR},
+				#{item.updateTime,jdbcType=TIMESTAMP},
+				#{item.updator,jdbcType=VARCHAR},
+				#{item.delFlag,jdbcType=INTEGER},
+				#{item.leader,jdbcType=INTEGER}
+	        )
+        </foreach>  
+	     ON DUPLICATE KEY UPDATE
+		        company_id		= VALUES(company_id),
+		        code			= VALUES(code),
+		        name			= VALUES(name),
+		        pid				= VALUES(pid),
+		        update_time		= VALUES(update_time),
+		        updator			= VALUES(updator),
+		        del_flag		= VALUES(del_flag)
+	</update>
+
+	<delete id="delDepatment" parameterType="java.lang.String">
+		delete from tbl_privilege_department
+		where ID = #{id,jdbcType=VARCHAR}
+	</delete>
+
+	<update id="updateDepartment" parameterType="department">
+		update tbl_privilege_department
+		<set>
+			<if test="id != null">
+				id = #{id,jdbcType=VARCHAR},
+			</if>
+			<if test="companyId != null">
+				company_id = #{companyId,jdbcType=VARCHAR},
+			</if>
+			<if test="name != null">
+				name = #{name,jdbcType=VARCHAR},
+			</if>
+			<if test="code != null">
+				code = #{code,jdbcType=VARCHAR},
+			</if>
+			<if test="note != null">
+				note = #{note,jdbcType=VARCHAR},
+			</if>
+			<if test="pid != null">
+				pid = #{pid,jdbcType=VARCHAR},
+			</if>
+			<if test="orderNo != null">
+				order_no = #{orderNo,jdbcType=INTEGER},
+			</if>
+			<if test="createTime != null">
+				create_time = #{createTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="creator != null">
+				creator = #{creator,jdbcType=VARCHAR},
+			</if>
+			<if test="updateTime != null">
+				update_time = #{updateTime,jdbcType=TIMESTAMP},
+			</if>
+			<if test="updator != null">
+				updator = #{updator,jdbcType=VARCHAR},
+			</if>
+			<if test="delFlag != null">
+				del_flag = #{delFlag,jdbcType=INTEGER},
+			</if>
+			<if test="leader != null">
+				leader = #{leader,jdbcType=INTEGER}
+			</if>
+		</set>
+		where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	
+	<update id="updateDepartmentList" parameterType="java.util.List">
+    	<foreach collection="list" item="item" index="index" open="" close=";" separator=";">
+			update tbl_privilege_department
+			<set>
+				<if test="item.companyId != null">
+					company_id = #{item.companyId,jdbcType=VARCHAR},
+				</if>
+				<if test="item.name != null">
+					name = #{item.name,jdbcType=VARCHAR},
+				</if>
+				<if test="item.code != null">
+					code = #{item.code,jdbcType=VARCHAR},
+				</if>
+				<if test="item.note != null">
+					note = #{item.note,jdbcType=VARCHAR},
+				</if>
+				<if test="item.pid != null">
+					pid = #{item.pid,jdbcType=VARCHAR},
+				</if>
+				<if test="item.orderNo != null">
+					order_no = #{item.orderNo,jdbcType=INTEGER},
+				</if>
+				<if test="item.createTime != null">
+					create_time = #{item.createTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.creator != null">
+					creator = #{item.creator,jdbcType=VARCHAR},
+				</if>
+				<if test="item.updateTime != null">
+					update_time = #{item.updateTime,jdbcType=TIMESTAMP},
+				</if>
+				<if test="item.updator != null">
+					updator = #{item.updator,jdbcType=VARCHAR},
+				</if>
+				<if test="item.delFlag != null">
+					del_flag = #{item.delFlag,jdbcType=INTEGER},
+				</if>
+				<if test="item.leader != null">
+					leader = #{item.leader,jdbcType=INTEGER}
+				</if>
+			</set>
+			where ID = #{item.id,jdbcType=VARCHAR}
+	    </foreach>
+    </update>
+</mapper>

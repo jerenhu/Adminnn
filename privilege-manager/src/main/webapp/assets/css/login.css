@@ -1,0 +1,21 @@
+/* 登录 */
+.dl-lgn-form dd i,.login-div .hd-tt i{background:url(../images/login-sprite.png) no-repeat;}
+.login-body{background:#1C77AC;overflow:hidden;}
+.login-div .hd{position:absolute; top:0; background:rgba(0,0,0, 0.2); filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#33000000', EndColorStr='#33000000');*zoom:1; z-index:100; width:100%;padding:10px 0;}:root .rgba{filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#00000000', EndColorStr='#00000000'); }
+.login-div .hd-tt{color:#afc5d2;margin-left:20px;}
+.login-div .hd-tt i{background-position:0 -32px;display:inline-block;width:16px;height:16px;vertical-align:middle;margin-right:5px;}
+.login-div .ft{height:50px; line-height:50px; text-align:center;position:absolute; bottom:0; width:100%; color:#2c6589;background:rgba(255,255,255, 0.1); filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#19ffffff', EndColorStr='#19ffffff');*zoom:1;}:root .rgba{filter:progid:DXImageTransform.Microsoft.Gradient(GradientType=0, StartColorStr='#00ffffff', EndColorStr='#00ffffff'); }
+.login-div .bd{background:url(../images/login-bg-light.png) no-repeat center center; width:100%; height:585px;top:50%;margin-top:-320px;position:absolute;}
+.login-box{width:692px; height:336px; background:url(../images/login-form-bg.png) no-repeat;position:absolute;left:50%;margin-left:-346px;top:50%;margin-top:-140px;}
+.dl-lgn-form{margin:82px 0 0 278px;position:relative;z-index:1000;}
+.lgn-ipt{width:343px;height:40px;line-height:40px;background-color:#ecf5fa;font-size:14px;border:1px solid #bcc6cf; border-radius:3px;padding-left:28px;width:315px\9;}
+.lgn-ipt-vc{width:257px;height:40px;line-height:40px;background-color:#ecf5fa;font-size:14px;border:1px solid #bcc6cf; border-radius:3px;padding-left:28px;width:315px\9;}
+.btn-nrml{background:url(../images/btns-sprite.png) left 0;  color:#fff; text-decoration:none; height:35px; float:left; cursor:hand; margin:0 10px 0 0;cursor:pointer;overflow:hidden;}
+.btn-nrml b{font-size:14px;background:url(../images/btns-sprite.png) right 0;  padding:7px 12px 9px 10px; margin:0 0 0 8px; float:left; height:19px;text-align:center;line-height:22px;}
+.btn-lgn b{width:100px;letter-spacing:4px;}
+.btn-nrml:hover{color:#fff;filter:Alpha(Opacity=90); opacity:0.9;}
+.dl-lgn-form dd{position:relative;}
+.dl-lgn-form dd i{position:absolute;width:13px;height:13px;top:15px;left:10px;}
+.dl-lgn-form dd.dd-user i{background-position:0 -15px;}
+.loading16{background:url(../images/loading16.gif) no-repeat;padding-left:22px;}
+.Validform_wrong{width:0;}

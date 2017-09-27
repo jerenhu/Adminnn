@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="SessionDataXML" >
+    <resultMap id="SessionDataMap" type="sessionData" >
+        <result column="session_id" property="sessionid" jdbcType="VARCHAR" />
+        <result column="user_info" property="userInfo" jdbcType="VARCHAR" />
+        <result column="acls_info" property="aclsInfo" jdbcType="LONGVARCHAR" />
+        <result column="other_info" property="otherInfo" jdbcType="VARCHAR" />
+        <result column="creation_time" property="creationTime" jdbcType="BIGINT" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        session_id,
+        user_info,
+        acls_info,
+        other_info,
+        creation_time
+    </sql>
+    
+    <sql id="where">
+        <if test="sessionId!=null and sessionId!=''">
+        and session_id = #{sessionId,jdbcType=VARCHAR}
+        </if>
+        <if test="userInfo!=null and userInfo!=''">
+        and user_info = #{userInfo,jdbcType=VARCHAR}
+        </if>
+        <if test="aclsInfo!=null and aclsInfo!=''">
+        and acls_info = #{aclsInfo,jdbcType=LONGVARCHAR}
+        </if>
+        <if test="otherInfo!=null and otherInfo!=''">
+        and other_info = #{otherInfo,jdbcType=VARCHAR}
+        </if>
+        <if test="creationTime!=null">
+        and creation_time = #{creationTime,jdbcType=BIGINT}
+        </if>
+    </sql>
+    
+    <select id="getSessionDataBySessionId" resultMap="SessionDataMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from tbl_privilege_session_data
+        where session_id = #{sessionId,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getAll" parameterType="sessionData" resultMap="SessionDataMap">
+        select * from tbl_privilege_session_data where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <select id="getByPage" parameterType="sessionData" resultMap="SessionDataMap">
+        select * from tbl_privilege_session_data where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <select id="getByPageCount" parameterType="sessionData" resultType="int">
+        select count(1) from tbl_privilege_session_data where 1=1 
+        <include refid="where" />
+    </select>
+   
+    <insert id="insertSessionData" parameterType="sessionData" >
+        insert into tbl_privilege_session_data (<include refid="Base_Column_List" />)
+        values (
+        #{sessionId,jdbcType=VARCHAR},
+        #{userInfo,jdbcType=VARCHAR},
+        #{aclsInfo,jdbcType=LONGVARCHAR},
+        #{otherInfo,jdbcType=VARCHAR},
+        #{creationTime,jdbcType=BIGINT}
+        )
+    </insert>
+    
+    <delete id="deleteSessionDataBySessionId" parameterType="java.lang.String" >
+        delete from tbl_privilege_session_data
+        where session_id = #{sessionId,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteSessionDataByCreationTime" parameterType="long" >
+        delete from tbl_privilege_session_data
+        where creation_time <![CDATA[<=]]>      #{value}
+    </delete>
+    
+    <update id="updateSessionData" parameterType="sessionData" >
+        update tbl_privilege_session_data
+        <set>
+            <if test="sessionId != null" >
+                session_id = #{sessionId,jdbcType=VARCHAR},
+            </if>
+            <if test="userInfo != null" >
+                user_info = #{userInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="aclsInfo != null" >
+                acls_info = #{aclsInfo,jdbcType=LONGVARCHAR},
+            </if>
+            <if test="otherInfo != null" >
+                other_info = #{otherInfo,jdbcType=VARCHAR},
+            </if>
+            <if test="creationTime != null" >
+                creation_time = #{creationTime,jdbcType=BIGINT}
+            </if>
+        </set>
+        where session_id = #{sessionId,jdbcType=VARCHAR}
+    </update>
+</mapper>

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="UserSystemXML" >
+    <resultMap id="UserSystemMap" type="userSystem" >
+        
+        <result column="id" property="id" jdbcType="VARCHAR" />
+        
+        <result column="user_id" property="userId" jdbcType="VARCHAR" />
+        
+        <result column="system_id" property="systemId" jdbcType="VARCHAR" />
+        
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        
+        <result column="creator" property="creator" jdbcType="VARCHAR" />
+        
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        
+        <result column="updator" property="updator" jdbcType="VARCHAR" />
+        
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        user_id,
+        system_id,
+        create_time,
+        creator,
+        update_time,
+        updator,
+        del_flag
+    </sql>
+    
+    <sql id="where">
+        <if test="id!=null and id!=''">
+        and id = #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="userId!=null and userId!=''">
+        and user_id = #{userId,jdbcType=VARCHAR}
+        </if>
+        <if test="systemId!=null and systemId!=''">
+        and system_id = #{systemId,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime!=null and createTime!=''">
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="creator!=null and creator!=''">
+        and creator = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime!=null and updateTime!=''">
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updator!=null and updator!=''">
+        and updator = #{updator,jdbcType=VARCHAR}
+        </if>
+        <if test="delFlag!=null">
+        and del_flag = #{delFlag,jdbcType=INTEGER}
+        </if>
+    </sql>
+    
+    <select id="getUserSystemById" resultMap="UserSystemMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from tbl_privilege_user_system
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getAll" parameterType="userSystem" resultMap="UserSystemMap">
+        select * from tbl_privilege_user_system where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <select id="getPagerModel" parameterType="userSystem" resultMap="UserSystemMap">
+        select * from tbl_privilege_user_system where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <insert id="insertUserSystem" parameterType="userSystem" >
+        insert into tbl_privilege_user_system (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=VARCHAR},
+        #{userId,jdbcType=VARCHAR},
+        #{systemId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{creator,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{updator,jdbcType=VARCHAR},
+        #{delFlag,jdbcType=INTEGER}
+        )
+    </insert>
+    
+    <delete id="delUserSystem" parameterType="java.lang.String" >
+        delete from tbl_privilege_user_system
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <delete id="delByUserId" parameterType="java.lang.String" >
+        delete from tbl_privilege_user_system
+        where user_id = #{userId,jdbcType=VARCHAR}
+    </delete>
+    
+    <update id="updateUserSystem" parameterType="userSystem" >
+        update tbl_privilege_user_system
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="userId != null" >
+                user_id = #{userId,jdbcType=VARCHAR},
+            </if>
+            <if test="systemId != null" >
+                system_id = #{systemId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null" >
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updator != null" >
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

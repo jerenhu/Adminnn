@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://code.alibabatech.com/schema/dubbo
+	http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+	<dubbo:application name="privilege-server" />
+	<dubbo:registry protocol="zookeeper" address="${dubbo.registry.address}" file="${dubbo.home}/output/dubbo.cache" />
+	<!-- 设置不依赖 -->
+	<dubbo:consumer check="false" timeout="300000" />
+	<dubbo:provider timeout="300000" />
+	<dubbo:protocol name="dubbo" port="21885" dispather="all" threadpool="cached" threads="5000" />
+	
+ 	<!-- 权限提供者 -->
+ 	<dubbo:service interface="com.ecnice.privilege.api.privilege.IPrivilegeApi" ref="privilegeApiImpl" owner="bruce.liu" version="1.0" />
+ 	
+ 	<!-- 角色提供者 -->
+	<dubbo:service interface="com.ecnice.privilege.api.privilege.IUserRoleApi" ref="userRoleApiImpl" owner="tuanzuo" version="1.0" />
+	
+</beans>

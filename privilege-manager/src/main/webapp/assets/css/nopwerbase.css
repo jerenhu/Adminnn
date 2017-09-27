@@ -1,0 +1,69 @@
+@charset "utf-8";
+*{padding:0;margin:0;}
+html{width:100%;color:#333;background:transparent;}
+body{width: 100%;background: transparent;}
+.inb{display:inline-block;*display:inline;*zoom:1}
+body,button,input,select,textarea{font:12px/1.5 "\5FAE\8F6F\96C5\9ED1","Microsoft Yahei",arial,"Hiragino Sans GB",tahoma,"\5B8B\4F53"}
+input,select,textarea{font-size:100%}
+table{border-collapse:collapse;border-spacing:0}
+fieldset,img{border:0;vertical-align: middle;}
+iframe{display:block;border:0;}
+abbr,acronym{border:0;font-variant:normal}
+del{text-decoration:line-through}
+i,b{font-style:normal;font-weight: normal;}
+ol,ul{list-style:none;padding: 0;margin: 0;}
+caption,th{text-align:left}
+h1,h2,h3,h4,h5,h6{font-weight:500;color:#000}
+h1{font-size:24px}
+h2{font-size:16px}
+h3,h4,h5,h6{font-size:14px}
+q:before,q:after{content:''}
+sub,sup{position:relative;font-size:75%;line-height:0;vertical-align:baseline}
+sup{top:-.5em}sub{bottom:-.25em}
+ins,a{text-decoration:none}
+a{-webkit-transition:color .3s;-moz-transition:color .3s;-ms-transition:color .3s;-o-transition:color .3s}
+a,a:link,a:visited{color:#333333}
+/*6eb6cd*/
+a:hover{color:#0E65AF;text-decoration:none;}
+.clearfix:after{visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0}
+.clearfix{zoom:1}
+html{_overflow-x:hidden;height: 100%;}
+.full_img{display: block; width: 100%;height: 100%}
+a,input[type="button"],input[type="submit"]{cursor: pointer;}
+*:focus, input{ outline: none; }
+.of{overflow: hidden;}
+.lf{float:left;}
+.rt{float: right;}
+.empty-word{width:300px;height:200px;position:relative;background: url("/docs/imgs/empty.png") center bottom no-repeat;}
+.no-meeting{width:300px;height:200px;position:relative;  background: url("/docs/imgs/no-meeting.png") center bottom no-repeat;}
+.no-serch-content{width:300px;height:200px;position:relative;  background: url("/docs/imgs/no-serch-content.png") center bottom no-repeat;}
+.no-signal{width:300px;height:200px;position:relative;  background: url("/docs/imgs/no-sigal.png") center bottom no-repeat;}
+.no-data{width:300px;text-align: center;font-size:14px;line-height: 54px;position: absolute;bottom: -50px}
+.easyui-datagrid tbody tr{
+    height:40px;
+    font-size: 14px;
+}
+.easyui-datagrid thead tr{
+    height:50px;
+    background-color: #F5F5F5;
+    font-size: 14px;
+}
+.easyui-datagrid thead th{
+    font-weight: normal;
+}
+.easyui-datagrid tbody tr td:first-child{
+    padding-left: 25px;
+}
+.easyui-datagrid thead  th:first-child{
+    padding-left: 25px;
+}
+.product-need{
+    margin: 0;
+    padding: 0 4px;
+    white-space: nowrap;
+    word-wrap: normal;
+    overflow: hidden;
+    line-height: 18px;
+    font-size: 14px;
+    width:131px;
+}

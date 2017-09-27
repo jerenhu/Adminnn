@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<init>
+	<!-- 部门 -->
+	<Department id="1" name="电商平台" />
+	<!-- 系统 -->
+	<IcSystem id="1" name="权限系统"
+		url="http://127.0.0.1:8080/privilege-manager/" sn="privilege" />
+	<!-- 模块 -->
+	<Module id="1" name="权限管理" sn="privilege" url="" orderNo="10"
+		systemId="1" pid="" privilegeValue="query-查询-0" />
+	<Module id="11" name="系统管理" sn="icsystem"
+		url="managment/privilege/icsystem/list.do" orderNo="1001" systemId="1"
+		pid="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="12" name="模块管理" sn="module"
+		url="managment/privilege/module/list.do" orderNo="1002" systemId="1"
+		pid="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="13" name="用户管理" sn="user"
+		url="managment/privilege/user/list.do" orderNo="1003" systemId="1"
+		pid="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3,warranty-授权-4" />
+	<Module id="14" name="部门管理" sn="dept"
+		url="managment/privilege/dept/list.do" orderNo="1004" systemId="1"
+		pid="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="15" name="角色管理" sn="role"
+		url="managment/privilege/role/list.do" orderNo="1005" systemId="1"
+		pid="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3,warranty-授权-4" />
+	<Module id="16" name="系统配置" sn="config"
+		url="managment/system/systemConfig/list.do" orderNo="1006" pid="1"
+		systemId="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="17" name="数据字典" sn="dictionary"
+		url="managment/system/dictionary/list.do" orderNo="1007" pid="1"
+		systemId="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="18" name="登录日志" sn="loginlog"
+		url="managment/system/loginLog/list.do" orderNo="1008" pid="1"
+		systemId="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="19" name="系统权限值" sn="pval"
+		url="managment/privilege/pval/list.do" orderNo="1009" pid="1"
+		systemId="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<Module id="20" name="公司管理" sn="company"
+		url="managment/privilege/company/list.do" orderNo="1010" pid="1"
+		systemId="1" privilegeValue="query-查询-0,add-添加-1,update-修改-2,delete-删除-3" />
+	<!-- 角色 -->
+	<Role id="1" name="超级管理员" sn="admin" />
+	<!-- 用户 -->
+	<User id="1" realName="管理员" username="admin" password="888888"
+		departmentId="1" systemId="1" roleId="1" />
+</init>			

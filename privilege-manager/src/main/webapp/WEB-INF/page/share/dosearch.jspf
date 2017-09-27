@@ -1,0 +1,30 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<script>
+$(function(){
+	//查询方法
+	var doSearch = function doSearch(){
+		var myForm = $('#searchFm');
+		var data = myForm.serializeJson();
+		$.each(data,function(index,dom){ //去空格
+			if(index && dom){
+				data[index]=$.trim(dom);
+			}
+		});
+		/*$('#subDg').datagrid({
+			url:basePath+'/search/sku/ajaxList.do',
+			queryParams:data
+		});*/
+		$('#dg').datagrid('load', data);
+	};
+	//查询按钮
+	$('#searchBtn').click(function() {
+		doSearch();
+	});
+	//回车事件
+	$('#searchFm').on('keydown', function(event){
+		if(event.keyCode == 13){
+			doSearch();
+		}
+	});
+});
+</script>

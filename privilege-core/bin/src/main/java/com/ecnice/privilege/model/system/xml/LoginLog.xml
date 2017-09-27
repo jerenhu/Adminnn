@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="LoginLogXML" >
+    <resultMap id="LoginLogMap" type="loginLog" >
+        
+        <result column="id" property="id" jdbcType="INTEGER" />
+        
+        <result column="ip" property="ip" jdbcType="VARCHAR" />
+        
+        <result column="operation_id" property="operationId" jdbcType="VARCHAR" />
+        
+        <result column="operation_username" property="operationUsername" jdbcType="VARCHAR" />
+        
+        <result column="operation_person" property="operationPerson" jdbcType="VARCHAR" />
+        
+        <result column="operation_content" property="operationContent" jdbcType="VARCHAR" />
+        
+        <result column="operation_time" property="operationTime" jdbcType="TIMESTAMP" />
+        
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        ip,
+        operation_id,
+        operation_username,
+        operation_person,
+        operation_content,
+        operation_time
+    </sql>
+    
+    <sql id="where">
+        <if test="id!=null and id!=0">
+        and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="ip!=null and ip!=''">
+        and ip = #{ip,jdbcType=VARCHAR}
+        </if>
+        <if test="operationId!=null and operationId!=''">
+        and operation_id = #{operationId,jdbcType=VARCHAR}
+        </if>
+        <if test="operationUsername!=null and operationUsername!=''">
+        and operation_username like "%"#{operationUsername,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="operationPerson!=null and operationPerson!=''">
+        and operation_person like "%"#{operationPerson,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="operationContent!=null and operationContent!=''">
+        and operation_content like "%"#{operationContent,jdbcType=VARCHAR}"%"
+        </if>
+        <if test="operationTimeStart!=null and operationTimeStart!=''">
+        <![CDATA[and operation_time >= #{operationTimeStart,jdbcType=VARCHAR}]]>
+        </if>
+        <if test="operationTimeEnd!=null and operationTimeEnd!=''">
+        <![CDATA[and operation_time <= #{operationTimeEnd,jdbcType=VARCHAR}]]>
+        </if>
+    </sql>
+    
+    <select id="getLoginLogById" resultMap="LoginLogMap" parameterType="java.lang.Integer" >
+        select id,<include refid="Base_Column_List" />
+        from tbl_privilege_login_log
+        where ID = #{id,jdbcType=INTEGER}
+    </select>
+    
+    <select id="getAll" parameterType="com.ecnice.privilege.vo.privilege.LoginLogVo" resultMap="LoginLogMap">
+        select id,<include refid="Base_Column_List" /> from tbl_privilege_login_log where 1=1 
+        <include refid="where" /> order by operation_time desc
+    </select>
+    
+    <select id="getPagerModel" parameterType="com.ecnice.privilege.vo.privilege.LoginLogVo" resultMap="LoginLogMap">
+        select id,<include refid="Base_Column_List" /> from tbl_privilege_login_log where 1=1 
+        <include refid="where" /> order by operation_time desc
+    </select>
+    
+    <insert id="insertLoginLog" parameterType="loginLog" >
+        insert into tbl_privilege_login_log (<include refid="Base_Column_List" />)
+        values (
+        #{ip,jdbcType=VARCHAR},
+        #{operationId,jdbcType=VARCHAR},
+        #{operationUsername,jdbcType=VARCHAR},
+        #{operationPerson,jdbcType=VARCHAR},
+        #{operationContent,jdbcType=VARCHAR},
+        #{operationTime,jdbcType=TIMESTAMP}
+        )
+    </insert>
+    
+    <delete id="delLoginLog" parameterType="java.lang.Integer" >
+        delete from tbl_privilege_login_log
+        where ID = #{id,jdbcType=INTEGER}
+    </delete>
+    
+    <update id="updateLoginLog" parameterType="loginLog" >
+        update tbl_privilege_login_log
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="ip != null" >
+                ip = #{ip,jdbcType=VARCHAR},
+            </if>
+            <if test="operationId != null" >
+                operation_id = #{operationId,jdbcType=VARCHAR},
+            </if>
+            <if test="operationUsername != null" >
+                operation_username = #{operationUsername,jdbcType=VARCHAR},
+            </if>
+            <if test="operationPerson != null" >
+                operation_person = #{operationPerson,jdbcType=VARCHAR},
+            </if>
+            <if test="operationContent != null" >
+                operation_content = #{operationContent,jdbcType=VARCHAR},
+            </if>
+            <if test="operationTime != null" >
+                operation_time = #{operationTime,jdbcType=TIMESTAMP}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=INTEGER}
+    </update>
+</mapper>

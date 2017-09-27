@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="RoleCompanyXML" >
+    <resultMap id="RoleCompanyMap" type="com.ecnice.privilege.model.privilege.RoleCompany" >
+        <id column="id" property="id" jdbcType="VARCHAR" />
+        
+        
+        <result column="role_id" property="roleId" jdbcType="VARCHAR" />
+        
+        <result column="company_id" property="companyId" jdbcType="VARCHAR" />
+        
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+        
+        <result column="creator" property="creator" jdbcType="VARCHAR" />
+        
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+        
+        <result column="updator" property="updator" jdbcType="VARCHAR" />
+        
+        <result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        role_id,
+        company_id,
+        create_time,
+        creator,
+        update_time,
+        updator,
+        del_flag
+    </sql>
+    
+    <sql id="where">
+        <if test="id!=null and id!=''">
+        and id = #{id,jdbcType=VARCHAR}
+        </if>
+        <if test="roleId!=null and roleId!=''">
+        and role_id = #{roleId,jdbcType=VARCHAR}
+        </if>
+        <if test="companyId!=null and companyId!=''">
+        and company_id = #{companyId,jdbcType=VARCHAR}
+        </if>
+        <if test="createTime!=null and createTime!=''">
+        and create_time = #{createTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="creator!=null and creator!=''">
+        and creator = #{creator,jdbcType=VARCHAR}
+        </if>
+        <if test="updateTime!=null and updateTime!=''">
+        and update_time = #{updateTime,jdbcType=TIMESTAMP}
+        </if>
+        <if test="updator!=null and updator!=''">
+        and updator = #{updator,jdbcType=VARCHAR}
+        </if>
+        <if test="delFlag!=null">
+        and del_flag = #{delFlag,jdbcType=INTEGER}
+        </if>
+    </sql>
+    
+    <select id="getRoleCompanyById" resultMap="RoleCompanyMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from tbl_privilege_role_company
+        where id = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getAll" parameterType="com.ecnice.privilege.model.privilege.RoleCompany" resultMap="RoleCompanyMap">
+        select * from tbl_privilege_role_company where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <select id="getPagerModelByQuery" parameterType="com.ecnice.privilege.model.privilege.RoleCompany" resultMap="RoleCompanyMap">
+        select * from tbl_privilege_role_company where 1=1 
+        <include refid="where" />
+		order by update_time desc
+    </select>
+    
+    <select id="getByPageCount" parameterType="com.ecnice.privilege.model.privilege.RoleCompany" resultType="int">
+        select count(1) from tbl_privilege_role_company where 1=1 
+        <include refid="where" />
+    </select>
+    <insert id="insertRoleCompany" parameterType="com.ecnice.privilege.model.privilege.RoleCompany"  >
+        insert into tbl_privilege_role_company (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=VARCHAR},
+        #{roleId,jdbcType=VARCHAR},
+        #{companyId,jdbcType=VARCHAR},
+        #{createTime,jdbcType=TIMESTAMP},
+        #{creator,jdbcType=VARCHAR},
+        #{updateTime,jdbcType=TIMESTAMP},
+        #{updator,jdbcType=VARCHAR},
+        #{delFlag,jdbcType=INTEGER}
+        )
+    </insert>
+    
+    <delete id="delRoleCompanyById" parameterType="java.lang.String" >
+        delete from tbl_privilege_role_company
+        where id = #{id,jdbcType=VARCHAR}
+    </delete>
+    <delete id="deleteRoleCompanyByRoleCompanyId" parameterType="java.util.Map">
+		delete from tbl_privilege_role_company
+		where company_id = #{cId,jdbcType=VARCHAR} and role_id = #{roleId,jdbcType=VARCHAR} 
+	</delete>
+    <delete id="delRoleCompanyByIds" parameterType="java.lang.String" >
+        delete from tbl_privilege_role_company
+        where id in(${ids}) 
+    </delete>
+    
+    <update id="updateRoleCompany" parameterType="com.ecnice.privilege.model.privilege.RoleCompany" >
+        update tbl_privilege_role_company
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=VARCHAR},
+            </if>
+            <if test="roleId != null" >
+                role_id = #{roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="companyId != null" >
+                company_id = #{companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="creator != null" >
+                creator = #{creator,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updator != null" >
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id = #{id,jdbcType=VARCHAR}
+    </update>
+
+    <update id="updateRoleCompanyByIds" parameterType="java.util.Map">
+        update tbl_privilege_role_company
+        <set>
+            <if test="roleCompany.id != null" >
+                id = #{roleCompany.id,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCompany.roleId != null" >
+                role_id = #{roleCompany.roleId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCompany.companyId != null" >
+                company_id = #{roleCompany.companyId,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCompany.createTime != null" >
+                create_time = #{roleCompany.createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleCompany.creator != null" >
+                creator = #{roleCompany.creator,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCompany.updateTime != null" >
+                update_time = #{roleCompany.updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="roleCompany.updator != null" >
+                updator = #{roleCompany.updator,jdbcType=VARCHAR},
+            </if>
+            <if test="roleCompany.delFlag != null" >
+                del_flag = #{roleCompany.delFlag,jdbcType=INTEGER}
+            </if>
+        </set>
+        where id in(${ids}) 
+    </update>
+</mapper>

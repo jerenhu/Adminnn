@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="DictionaryXML" >
+    <resultMap id="DictionaryMap" type="dictionary" >
+        
+        <result column="id" property="id" jdbcType="INTEGER" />
+        
+        <result column="code" property="code" jdbcType="VARCHAR" />
+        
+        <result column="name" property="name" jdbcType="VARCHAR" />
+        
+        <result column="pcode" property="pcode" jdbcType="VARCHAR" />
+        
+        <result column="system_sn" property="systemSn" jdbcType="VARCHAR" />
+        
+        <result column="sn" property="sn" jdbcType="VARCHAR" />
+        
+        <result column="order_no" property="orderNo" jdbcType="INTEGER" />
+    </resultMap>
+    
+    <sql id="Base_Column_List" >
+        id,
+        code,
+        name,
+        pcode,
+        system_sn,
+        sn,
+        order_no
+    </sql>
+    
+    <sql id="where">
+        <if test="id!=null">
+        and id = #{id,jdbcType=INTEGER}
+        </if>
+        <if test="code!=null and code!=''">
+        and code = #{code,jdbcType=VARCHAR}
+        </if>
+        <if test="name!=null and name!=''">
+        and name = #{name,jdbcType=VARCHAR}
+        </if>
+        <if test="pcode!=null and pcode!=''">
+        and pcode = #{pcode,jdbcType=VARCHAR}
+        </if>
+        <if test="systemSn!=null and systemSn!=''">
+        and system_sn = #{systemSn,jdbcType=VARCHAR}
+        </if>
+        <if test="sn!=null and sn!=''">
+        and sn = #{sn,jdbcType=VARCHAR}
+        </if>
+        <if test="orderNo!=null and orderNo!=''">
+        and order_no = #{orderNo,jdbcType=VARCHAR}
+        </if>
+    </sql>
+    
+    <select id="getDictionaryById" resultMap="DictionaryMap" parameterType="java.lang.String" >
+        select 
+        <include refid="Base_Column_List" />
+        from tbl_privilege_dictionary
+        where ID = #{id,jdbcType=VARCHAR}
+    </select>
+    
+    <select id="getAll" parameterType="dictionary" resultMap="DictionaryMap">
+        select * from tbl_privilege_dictionary where 1=1 
+        <include refid="where" />
+        order by order_no
+    </select>
+    
+    <select id="PagerModel" parameterType="dictionary" resultMap="DictionaryMap">
+        select * from tbl_privilege_dictionary where 1=1 
+        <include refid="where" />
+    </select>
+    
+    <insert id="insertDictionary" parameterType="dictionary" >
+        insert into tbl_privilege_dictionary (<include refid="Base_Column_List" />)
+        values (
+        #{id,jdbcType=INTEGER},
+        #{code,jdbcType=VARCHAR},
+        #{name,jdbcType=VARCHAR},
+        #{pcode,jdbcType=VARCHAR},
+        #{systemSn,jdbcType=VARCHAR},
+        #{sn,jdbcType=VARCHAR},
+        #{orderNo,jdbcType=VARCHAR}
+        )
+    </insert>
+    
+    <delete id="delDictionary" parameterType="java.lang.String" >
+        delete from tbl_privilege_dictionary
+        where ID = #{id,jdbcType=VARCHAR}
+    </delete>
+    
+    <update id="updateDictionary" parameterType="dictionary" >
+        update tbl_privilege_dictionary
+        <set>
+            <if test="id != null" >
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="code != null" >
+                code = #{code,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="pcode != null" >
+                pcode = #{pcode,jdbcType=VARCHAR},
+            </if>
+            <if test="systemSn != null" >
+                system_sn = #{systemSn,jdbcType=VARCHAR},
+            </if>
+            <if test="sn != null" >
+                sn = #{sn,jdbcType=VARCHAR},
+            </if>
+            <if test="orderNo != null" >
+                order_no = #{orderNo,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+    </update>
+</mapper>

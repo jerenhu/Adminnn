@@ -1,0 +1,29 @@
+@CHARSET "UTF-8";
+html,body {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	width: 100%;
+	height: 100%;
+	overflow: hidden;
+	font_size:10px;
+}
+/************** label字体 **************************/
+.miniui-label {
+	font-family: Tahoma,Verdana,宋体;
+	font-size: 12px;
+	line-height: 22px;
+}
+
+.tb_class {
+   background: #f4f4f4 none repeat scroll 0 0;
+   border-bottom: 1px solid #ddd;
+   height: 28px;
+   padding: 2px 5px 1px;
+}
+
+.function-item 
+{
+   margin-left:5px;
+   margin-right:5px;
+}

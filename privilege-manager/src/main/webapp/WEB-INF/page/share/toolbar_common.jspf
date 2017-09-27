@@ -1,0 +1,14 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.ecnice.com/privilege/functions" prefix="my"%>
+<%-- 查询的权限值 --%>
+<c:set var="queryValue" value="1" scope="page"/>
+<%-- 重置，刷新 --%>
+<c:if test="${my:hasPermission(sessionId,systemSn,nameSpace, queryValue)}">
+	<a href="javascript:void(0)" iconCls="icon-refresh" plain="true" onclick="common.refresh()">刷新</a>
+	<a>-</a>
+</c:if>
+<c:if test="${my:hasPermission(sessionId,systemSn,nameSpace, queryValue)}">
+	<a href="javascript:void(0)" iconCls="icon-reset" plain="true" onclick="common.reset()">重置</a>
+	<a>-</a>
+</c:if>

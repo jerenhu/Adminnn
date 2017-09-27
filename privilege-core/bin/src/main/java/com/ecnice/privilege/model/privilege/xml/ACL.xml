@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="AclXML">
+	<resultMap id="AclMap" type="acl">
+		<result column="id" property="id" jdbcType="VARCHAR" />
+		<result column="release_id" property="releaseId" jdbcType="VARCHAR" />
+		<result column="release_sn" property="releaseSn" jdbcType="VARCHAR" />
+		<result column="system_sn" property="systemSn" jdbcType="VARCHAR" />
+		<result column="module_sn" property="moduleSn" jdbcType="VARCHAR" />
+		<result column="module_id" property="moduleId" jdbcType="VARCHAR" />
+		<result column="acl_state" property="aclState" jdbcType="INTEGER" />
+		<result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+		<result column="creator" property="creator" jdbcType="VARCHAR" />
+		<result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+		<result column="updator" property="updator" jdbcType="VARCHAR" />
+		<result column="del_flag" property="delFlag" jdbcType="INTEGER" />
+	</resultMap>
+
+	<sql id="Base_Column_List">
+		id,
+		release_id,
+		release_sn,
+		system_sn,
+		module_sn,
+		module_id,
+		acl_state,
+		create_time,
+		creator,
+		update_time,
+		updator,
+		del_flag
+	</sql>
+
+	<sql id="where">
+		<if test="id!=null and id!=''">
+			and id = #{id,jdbcType=VARCHAR}
+		</if>
+		<if test="releaseId!=null and releaseId!=''">
+			and release_id = #{releaseId,jdbcType=VARCHAR}
+		</if>
+		<if test="releaseSn!=null and releaseSn!=''">
+			and release_sn = #{releaseSn,jdbcType=VARCHAR}
+		</if>
+		<if test="systemSn!=null and systemSn!=''">
+			and system_sn = #{systemSn,jdbcType=VARCHAR}
+		</if>
+		<if test="moduleId!=null and moduleId!=''">
+			and module_id = #{moduleId,jdbcType=VARCHAR}
+		</if>
+		<if test="delFlag!=null">
+			and del_flag = #{delFlag,jdbcType=INTEGER}
+		</if>
+	</sql>
+
+	<insert id="insertAcl" parameterType="acl">
+		insert into tbl_privilege_acl (
+		<include refid="Base_Column_List" />
+		)
+		values (
+		#{id,jdbcType=VARCHAR},
+		#{releaseId,jdbcType=VARCHAR},
+		#{releaseSn,jdbcType=VARCHAR},
+		#{systemSn,jdbcType=VARCHAR},
+		#{moduleSn,jdbcType=VARCHAR},
+		#{moduleId,jdbcType=VARCHAR},
+		#{aclState,jdbcType=INTEGER},
+		#{createTime,jdbcType=TIMESTAMP},
+		#{creator,jdbcType=VARCHAR},
+		#{updateTime,jdbcType=TIMESTAMP},
+		#{updator,jdbcType=VARCHAR},
+		#{delFlag,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<insert id="insertAclBatch" parameterType="java.util.List">
+		insert into tbl_privilege_acl (
+		<include refid="Base_Column_List" />
+		)
+		values
+		<foreach collection="list" item="item" separator=",">
+			(
+			#{item.id,jdbcType=VARCHAR},
+			#{item.releaseId,jdbcType=VARCHAR},
+			#{item.releaseSn,jdbcType=VARCHAR},
+			#{item.systemSn,jdbcType=VARCHAR},
+			#{item.moduleSn,jdbcType=VARCHAR},
+			#{item.moduleId,jdbcType=VARCHAR},
+			#{item.aclState,jdbcType=INTEGER},
+			#{item.createTime,jdbcType=TIMESTAMP},
+			#{item.creator,jdbcType=VARCHAR},
+			#{item.updateTime,jdbcType=TIMESTAMP},
+			#{item.updator,jdbcType=VARCHAR},
+			#{item.delFlag,jdbcType=INTEGER}
+			)
+		</foreach>
+	</insert>
+	<update id="updateAcl" parameterType="acl">
+		update tbl_privilege_acl 
+		<set>
+            <if test="releaseId != null" >
+                release_id = #{releaseId,jdbcType=VARCHAR},
+            </if>
+            <if test="releaseSn != null" >
+                release_sn = #{releaseSn,jdbcType=VARCHAR},
+            </if>
+            <if test="systemSn != null" >
+                system_sn = #{systemSn,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleSn != null" >
+                module_sn = #{moduleSn,jdbcType=VARCHAR},
+            </if>
+            <if test="moduleId != null" >
+                module_id = #{moduleId,jdbcType=VARCHAR},
+            </if>
+             <if test="aclState != null" >
+                acl_state = #{aclState,jdbcType=INTEGER},
+            </if>
+            <if test="createTime != null" >
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updator != null" >
+                updator = #{updator,jdbcType=VARCHAR},
+            </if>
+            <if test="updateTime != null" >
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="delFlag != null" >
+                del_flag = #{delFlag,jdbcType=INTEGER}
+            </if>
+        </set>
+        where ID = #{id,jdbcType=VARCHAR}
+	</update>
+	<delete id="delAcl" parameterType="acl">
+		delete from tbl_privilege_acl
+		where 1=1
+		<if test="releaseId!=null and releaseId!=''">
+			and release_id = #{releaseId,jdbcType=VARCHAR}
+		</if>
+		<if test="releaseSn!=null and releaseSn!=''">
+			and release_sn = #{releaseSn,jdbcType=VARCHAR}
+		</if>
+		<if test="systemSn!=null and systemSn!=''">
+			and system_sn = #{systemSn,jdbcType=VARCHAR}
+		</if>
+		<if test="moduleSn!=null and moduleSn!=''">
+			and module_sn = #{moduleSn,jdbcType=VARCHAR}
+		</if>
+		<if test="moduleId!=null and moduleId!=''">
+			and module_id = #{moduleId,jdbcType=VARCHAR}
+		</if>
+	</delete>
+	<delete id="delAclByResourceIdAndSn" parameterType="acl">
+		delete from
+		tbl_privilege_acl
+		where release_id = #{releaseId,jdbcType=VARCHAR}
+		and
+		release_sn = #{releaseSn,jdbcType=VARCHAR}
+	</delete>
+	<delete id="delAclById" parameterType="java.lang.String">
+		delete from tbl_privilege_acl where id=#{value,jdbcType=VARCHAR}
+	</delete>
+	<select id="getAllACL" parameterType="acl" resultMap="AclMap">
+		select * from tbl_privilege_acl 
+		where 1=1 
+        <include refid="where" />
+	</select>
+	<select id="getModuleIdsByRoleIds" parameterType="java.lang.String"
+		resultType="com.ecnice.privilege.vo.privilege.AclVo">
+		SELECT DISTINCT t3.module_id AS moduleId FROM
+		tbl_privilege_acl t1
+		INNER JOIN tbl_privilege_role t2 ON
+		t1.release_id=t2.id
+		WHERE t1.release_sn='role' AND <![CDATA[t1.acl_state&2>0]]>
+		AND
+		t1.release_id IN (${value})
+	</select>
+
+	<select id="getModuleIdsByUserId" parameterType="java.lang.String"
+		resultType="com.ecnice.privilege.vo.privilege.AclVo">
+		SELECT DISTINCT t3.module_id AS moduleId FROM
+		tbl_privilege_acl t1
+		INNER JOIN tbl_privilege_user t2 ON
+		t1.release_id=t2.id
+		WHERE t1.release_sn='user' AND <![CDATA[t1.acl_state&2>0]]>
+		AND
+		t1.release_id = #{userId}
+	</select>
+
+	<select id="getAclsByRoleIds" parameterType="java.lang.String"
+		resultMap="AclMap">
+		SELECT DISTINCT
+		t1.id,
+		t1.release_id,
+		t1.release_sn,
+		t1.system_sn,
+		t1.module_sn,
+		t1.module_id,
+		t1.acl_state FROM
+		tbl_privilege_acl t1
+		INNER JOIN
+		tbl_privilege_role
+		t2 ON
+		t1.release_id=t2.id
+		WHERE
+		t1.release_sn='role'
+		AND t1.release_id IN
+		(${value})
+	</select>
+	<select id="getAclsByRoleId" parameterType="map" resultMap="AclMap">
+		SELECT DISTINCT
+		t1.id,
+		t1.release_id,
+		t1.release_sn,
+		t1.system_sn,
+		t1.module_sn,
+		t1.module_id,
+		t1.acl_state FROM
+		tbl_privilege_acl t1
+		INNER JOIN
+		tbl_privilege_role t2 ON
+		t1.release_id=t2.id
+		WHERE
+		t1.release_sn='role'
+		AND
+		t1.release_id=#{roleId}
+		<if test="systemSn!=null and systemSn!=''">
+			and t1.system_sn = #{systemSn,jdbcType=VARCHAR}
+		</if>
+	</select>
+
+	<select id="getAclsByUserId" parameterType="map" resultMap="AclMap">
+		SELECT DISTINCT
+		t1.id,
+		t1.release_id,
+		t1.release_sn,
+		t1.system_sn,
+		t1.module_sn,
+		t1.module_id,
+		t1.acl_state FROM
+		tbl_privilege_acl t1
+		INNER JOIN tbl_privilege_user
+		t2 ON
+		t1.release_id=t2.id
+		WHERE t1.release_sn='user'
+		AND t1.release_id =
+		#{userId}
+		<if test="systemSn!=null and systemSn!=''">
+			and t1.system_sn = #{systemSn,jdbcType=VARCHAR}
+		</if>
+	</select>
+	
+	<update id="updateSn" parameterType="map">
+		update tbl_privilege_acl
+		<set>
+			<if test="systemSn != null">
+				system_sn = #{systemSn,jdbcType=VARCHAR},
+			</if>
+			<if test="moduleSn != null">
+				module_sn = #{moduleSn,jdbcType=VARCHAR},
+			</if>
+		</set>
+		where 1=1
+		<if test="systemSn!=null and systemSn!=''">
+			and system_sn = #{oldSystemSn,jdbcType=VARCHAR}
+		</if>
+		<if test="moduleSn!=null and moduleSn!=''">
+			and module_sn = #{moduleId,jdbcType=VARCHAR}
+		</if>
+	</update>
+	
+	<update id="updateModuleSnByModuleId" parameterType="map">
+		update tbl_privilege_acl
+		<set>
+			<if test="newModuleSn != null">
+				module_sn = #{newModuleSn,jdbcType=VARCHAR}
+			</if>
+		</set>
+		where module_id = #{moduleId,jdbcType=VARCHAR}
+	</update>
+</mapper>

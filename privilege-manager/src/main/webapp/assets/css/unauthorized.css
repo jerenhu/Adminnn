@@ -1,0 +1,60 @@
+*{
+    margin: 0px;
+    padding: 0px;
+}
+body {
+    margin: 0px auto;
+    background: #d7f4fb;
+}
+.main {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+.unauthorized {
+    position: absolute;
+    top:50%;
+    left: 50%;
+    margin-top: -256px;
+    margin-left: -306px;
+    width: 612px;
+    height: 512px;
+}
+.unauthorized-msg {
+    color: #0b4d5c;
+    text-align: center;
+    line-height: 40px;
+}
+.unauthorized-msg span:first-child {
+    font-size: 30px;
+}
+.unauthorized-msg span:last-child {
+    font-size: 20px;
+}
+.unauthorized-action {
+    width: 100px;
+    margin: 30px auto;
+}
+.unauthorized-action .btn-unauthorized {
+    display: inline-block;
+    width: 100px;
+    height: 38px;
+    line-height: 38px;
+    color: #fbfeff;
+    font-size: 12px;
+    text-align: center;
+    background: #0e65af;
+    border-radius: 4px;
+}
+
+.unauthorized-action .btn-unauthorized:hover {
+    opacity: 0.9;
+}
+
+.unauthorized-img {
+    padding: 0px 20px;
+}
+.unauthorized-img {
+    width: 100px;
+}
